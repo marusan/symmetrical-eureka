@@ -1,0 +1,21 @@
+#!/usr/bin/python
+
+import smbus
+import sht31
+bus = smbus.SMBus(1)
+
+#temperature and humidity
+with sht31.SHT31(1) as sht31:
+#    print sht31.check_heater_status()
+#    sht31.turn_heater_on()
+#    print sht31.check_heater_status()
+#    sht31.turn_heater_off()
+#    print sht31.check_heater_status()
+    temperature, humidity = sht31.get_temp_and_humidity()
+#    thi = (0.81 * temperature)+(0.01 * humidity)*((0.99 * temperature) -14.3)+46.3
+    ewet = 7.5 * temperature / ( temperature + 273.3)
+    ewet = 6.11 * pow(10,ewet)
+    dry =  217.0 * ewet / (temperature + 273.15) * (humidity / 100)
+    print "%.2f" % dry
+#    print "Temperature: %s" % temperature
+#    print "Humidity: %s" % humidity
